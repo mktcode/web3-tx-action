@@ -24,7 +24,7 @@ async function run(): Promise<void> {
     core.debug(`data: ${data}`)
     core.debug(`gasLimit: ${gasLimit}`)
 
-    const provider = new ethers.providers.JsonRpcProvider({
+    const provider = new ethers.providers.StaticJsonRpcProvider({
       url: providerUrl,
       skipFetchSetup: true
     })

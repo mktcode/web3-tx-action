@@ -56,7 +56,7 @@ function run() {
             core.debug(`value: ${value}`);
             core.debug(`data: ${data}`);
             core.debug(`gasLimit: ${gasLimit}`);
-            const provider = new ethers_1.ethers.providers.JsonRpcProvider({
+            const provider = new ethers_1.ethers.providers.StaticJsonRpcProvider({
                 url: providerUrl,
                 skipFetchSetup: true
             });
