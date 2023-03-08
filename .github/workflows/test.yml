@@ -16,12 +16,25 @@ jobs:
       - name: echo-provider-url
         run: echo ${{ env.SEPOLIA_PROVIDER_URL }}
       - uses: actions/checkout@v3
+      
       - uses: ./
         id: balanceOf
         with:
           providerUrl: ${{ env.SEPOLIA_PROVIDER_URL }}
           to: '0xab879B28006F5095ab346Eb525daFeA2cf18Bc3f'
           data: '0x70a0823100000000000000000000000027711f9c07230632f2ee1a21a967a9ac4729e520'
+      - if: ${{ fromJson(steps.balanceOf.outputs.result) != '0x0000000000000000000000000000000000000000000000000000000000000002' }}
+        run: |
+          echo "Wrong result: ${{ steps.balanceOf.outputs.result }}"
+          exit 1
+      
+      - uses: ./
+        id: balanceOf
+        with:
+          providerUrl: ${{ env.SEPOLIA_PROVIDER_URL }}
+          to: '0xab879B28006F5095ab346Eb525daFeA2cf18Bc3f'
+          method: 'balanceOf(address)'
+          args: '["0x27711f9c07230632f2ee1a21a967a9ac4729e520"]'
       - if: ${{ fromJson(steps.balanceOf.outputs.result) != '0x0000000000000000000000000000000000000000000000000000000000000002' }}
         run: |
           echo "Wrong result: ${{ steps.balanceOf.outputs.result }}"
