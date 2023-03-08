@@ -10,24 +10,21 @@ type Tx = {
 
 async function run(): Promise<void> {
   try {
-    const providerUrl: string = core.getInput('provider')
+    const providerUrl: string = core.getInput('providerUrl')
     const walletKey: string = core.getInput('walletKey')
     const to: string = core.getInput('to')
     const value: string = core.getInput('value')
     const data: string = core.getInput('data')
     const gasLimit: string = core.getInput('gasLimit')
 
-    core.debug(`provider: ${providerUrl}`)
+    core.debug(`providerUrl: ${providerUrl}`)
     core.debug(`walletKey: ${walletKey}`)
     core.debug(`to: ${to}`)
     core.debug(`value: ${value}`)
     core.debug(`data: ${data}`)
     core.debug(`gasLimit: ${gasLimit}`)
 
-    const provider = new ethers.providers.StaticJsonRpcProvider({
-      url: providerUrl,
-      skipFetchSetup: true
-    })
+    const provider = new ethers.providers.JsonRpcProvider(providerUrl)
 
     let wallet: ethers.Wallet | undefined = undefined
 

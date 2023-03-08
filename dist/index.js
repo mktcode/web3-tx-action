@@ -44,22 +44,19 @@ const ethers_1 = __nccwpck_require__(1238);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const providerUrl = core.getInput('provider');
+            const providerUrl = core.getInput('providerUrl');
             const walletKey = core.getInput('walletKey');
             const to = core.getInput('to');
             const value = core.getInput('value');
             const data = core.getInput('data');
             const gasLimit = core.getInput('gasLimit');
-            core.debug(`provider: ${providerUrl}`);
+            core.debug(`providerUrl: ${providerUrl}`);
             core.debug(`walletKey: ${walletKey}`);
             core.debug(`to: ${to}`);
             core.debug(`value: ${value}`);
             core.debug(`data: ${data}`);
             core.debug(`gasLimit: ${gasLimit}`);
-            const provider = new ethers_1.ethers.providers.StaticJsonRpcProvider({
-                url: providerUrl,
-                skipFetchSetup: true
-            });
+            const provider = new ethers_1.ethers.providers.JsonRpcProvider(providerUrl);
             let wallet = undefined;
             if (walletKey) {
                 wallet = new ethers_1.ethers.Wallet(walletKey, provider);

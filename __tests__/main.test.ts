@@ -12,7 +12,7 @@ const data = contractInterface.encodeFunctionData('balanceOf', [
 ])
 
 test('returns expected result', () => {
-  process.env['INPUT_PROVIDER'] = process.env.SEPOLIA_PROVIDER_URL
+  process.env['INPUT_PROVIDERURL'] = process.env.SEPOLIA_PROVIDER_URL
   process.env['INPUT_TO'] = '0xab879B28006F5095ab346Eb525daFeA2cf18Bc3f'
   process.env['INPUT_VALUE'] = '0'
   process.env['INPUT_DATA'] = data
@@ -33,5 +33,6 @@ test('returns expected result', () => {
   } catch (error: any) {
     const output = error.stdout.toString()
     console.log(output)
+    expect(true).toBe(false)
   }
 })
