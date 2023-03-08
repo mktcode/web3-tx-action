@@ -1,11 +1,39 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'web3-tx-action'
+description: 'A GitHub Action to perform EVM transactions.'
+author: 'mktcode'
+
+branding:
+  icon: trending-up
+  color: purple
+
 inputs:
-  milliseconds: # change this
+  provider:
+    description: An ethereum RPC provider URL.
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  wallet-key:
+    desciption: The key for the account that sends the transaction. (Not needed for read-only transactions.)
+    required: false
+    default: null
+  to:
+    description: The receiving address. If provided a GitHub username or username and repo instead, the action will try to fetch the address from that repo's config.
+    required: true
+  value:
+    description: The value tranferred in Wei.
+    required: false
+    default: '0'
+  data:
+    description: Transaction data, usually for contract calls.
+    required: false
+    default: null
+  gas-limit:
+    description: The maximum gas to spend on the transaction.
+    required: false
+    default: null
+
+outputs:
+  result:
+    description: The JSON encoded transaction object or return value.
+
 runs:
   using: 'node16'
   main: 'dist/index.js'

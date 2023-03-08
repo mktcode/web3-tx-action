@@ -1,5 +1,5 @@
 {
-  "name": "evm-tx-action",
+  "name": "web3-tx-action",
   "version": "0.0.1",
   "private": true,
   "description": "A GitHub Action to perform EVM transactions.",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mktcode/evm-tx-action.git"
+    "url": "git+https://github.com/mktcode/web3-tx-action.git"
   },
   "keywords": [
     "actions",
@@ -27,7 +27,7 @@
     "web3",
     "ci"
   ],
-  "author": "",
+  "author": "mktcode",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0"
