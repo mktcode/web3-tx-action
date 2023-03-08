@@ -25,10 +25,18 @@ inputs:
     description: Transaction data, usually for contract calls.
     required: false
     default: ''
+  method:
+    description: The name of the contract method to call.
+    required: false
+    default: null
+  args:
+    description: The arguments for the contract method.
+    required: false
+    default: null
   gas-limit:
     description: The maximum gas to spend on the transaction.
     required: false
-    default: '21000'
+    default: null
 
 outputs:
   result:

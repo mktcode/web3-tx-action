@@ -49,6 +49,8 @@ function run() {
             const to = core.getInput('to');
             const value = core.getInput('value');
             const data = core.getInput('data');
+            const method = core.getInput('method');
+            const args = core.getInput('args');
             const gasLimit = core.getInput('gasLimit');
             core.debug(`providerUrl: ${providerUrl}`);
             core.debug(`walletKey: ${walletKey}`);
@@ -56,19 +58,25 @@ function run() {
             core.debug(`value: ${value}`);
             core.debug(`data: ${data}`);
             core.debug(`gasLimit: ${gasLimit}`);
-            const provider = new ethers_1.JsonRpcProvider(providerUrl);
-            let wallet = undefined;
-            if (walletKey) {
-                wallet = new ethers_1.Wallet(walletKey, provider);
-            }
             if (!(0, ethers_1.isAddress)(to))
                 throw new Error('Invalid to address');
             const tx = {
                 to,
-                value,
-                data
+                value
             };
+            if (data) {
+                tx.data = data;
+            }
+            else if (method) {
+                const contractInterface = new ethers_1.Interface([`function ${method}`]);
+                tx.data = contractInterface.encodeFunctionData(contractInterface.getFunctionName(method), args ? JSON.parse(args) : []);
+            }
             let result;
+            let wallet = null;
+            const provider = new ethers_1.JsonRpcProvider(providerUrl);
+            if (walletKey) {
+                wallet = new ethers_1.Wallet(walletKey, provider);
+            }
             if (wallet) {
                 tx.gasLimit = gasLimit;
                 core.debug(`Sending transaction ${JSON.stringify(tx)} from ${wallet.address}`);

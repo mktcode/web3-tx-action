@@ -1,12 +1,5 @@
 import * as core from '@actions/core'
-import {isAddress, JsonRpcProvider, Wallet} from 'ethers'
-
-type Tx = {
-  to: string
-  value: string
-  data: string
-  gasLimit?: string
-}
+import {Interface, isAddress, JsonRpcProvider, Wallet} from 'ethers'
 
 async function run(): Promise<void> {
   try {
@@ -15,6 +8,8 @@ async function run(): Promise<void> {
     const to: string = core.getInput('to')
     const value: string = core.getInput('value')
     const data: string = core.getInput('data')
+    const method = core.getInput('method')
+    const args = core.getInput('args')
     const gasLimit: string = core.getInput('gasLimit')
 
     core.debug(`providerUrl: ${providerUrl}`)
@@ -24,23 +19,30 @@ async function run(): Promise<void> {
     core.debug(`data: ${data}`)
     core.debug(`gasLimit: ${gasLimit}`)
 
-    const provider = new JsonRpcProvider(providerUrl)
+    if (!isAddress(to)) throw new Error('Invalid to address')
 
-    let wallet: Wallet | undefined = undefined
+    const tx: Record<string, string> = {
+      to,
+      value
+    }
+
+    if (data) {
+      tx.data = data
+    } else if (method) {
+      const contractInterface = new Interface([`function ${method}`])
+      tx.data = contractInterface.encodeFunctionData(
+        contractInterface.getFunctionName(method),
+        args ? JSON.parse(args) : []
+      )
+    }
+
+    let result
+    let wallet: Wallet | null = null
+    const provider = new JsonRpcProvider(providerUrl)
 
     if (walletKey) {
       wallet = new Wallet(walletKey, provider)
     }
-
-    if (!isAddress(to)) throw new Error('Invalid to address')
-
-    const tx: Tx = {
-      to,
-      value,
-      data
-    }
-
-    let result
 
     if (wallet) {
       tx.gasLimit = gasLimit
