@@ -1,5 +1,5 @@
 name: 'build-test'
-on: # rebuild any PRs and main branch changes
+on:
   pull_request:
   push:
     branches:
@@ -7,7 +7,7 @@ on: # rebuild any PRs and main branch changes
       - 'releases/*'
 
 jobs:
-  build: # make sure build/ci work properly
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,10 +15,19 @@ jobs:
           npm install
       - run: |
           npm run all
-  test: # make sure the action works on a clean machine without building
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        id: balanceOf
+        outputs:
+          result: ${{ steps.balanceOf.outputs.result }}
         with:
-          milliseconds: 1000
+          providerUrl: {{ secrets.SEPOLIA_PROVIDER_URL }}
+          to: '0xab879B28006F5095ab346Eb525daFeA2cf18Bc3f'
+          data: '0x70a0823100000000000000000000000027711f9c07230632f2ee1a21a967a9ac4729e520'
+      - if: ${{ steps.balanceOf.outputs.result != '0x0000000000000000000000000000000000000000000000000000000000000002' }}
+        run: |
+          echo "No address found in user config."
+          exit 1

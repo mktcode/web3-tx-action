@@ -7,7 +7,7 @@ branding:
   color: purple
 
 inputs:
-  provider:
+  providerUrl:
     description: An ethereum RPC provider URL.
     required: true
   wallet-key:
@@ -24,11 +24,11 @@ inputs:
   data:
     description: Transaction data, usually for contract calls.
     required: false
-    default: null
+    default: ''
   gas-limit:
     description: The maximum gas to spend on the transaction.
     required: false
-    default: null
+    default: '21000'
 
 outputs:
   result:

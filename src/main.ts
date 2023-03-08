@@ -1,12 +1,48 @@
 import * as core from '@actions/core'
+import {isAddress, JsonRpcProvider, Wallet} from 'ethers'
+
+type Tx = {
+  to: string
+  value: string
+  data: string
+  gasLimit?: string
+}
 
 async function run(): Promise<void> {
   try {
-    const provider: string = core.getInput('provider')
-    core.debug(`Using provider ${provider} ...`)
+    const providerUrl: string = core.getInput('provider')
+    const walletKey: string = core.getInput('walletKey')
+    const to: string = core.getInput('to')
+    const value: string = core.getInput('value')
+    const data: string = core.getInput('data')
+    const gasLimit: string = core.getInput('gasLimit')
 
-    const result = {
-      transactionHash: '0x1234567890abcdef'
+    const provider = new JsonRpcProvider(providerUrl)
+    let wallet: Wallet | undefined = undefined
+
+    if (walletKey) {
+      wallet = new Wallet(walletKey, provider)
+    }
+
+    if (!isAddress(to)) throw new Error('Invalid to address')
+
+    const tx: Tx = {
+      to,
+      value,
+      data
+    }
+
+    let result
+
+    if (wallet) {
+      tx.gasLimit = gasLimit
+      core.debug(
+        `Sending transaction ${JSON.stringify(tx)} from ${wallet.address}`
+      )
+      result = await wallet.sendTransaction(tx)
+    } else {
+      core.debug(`Sending call ${JSON.stringify(tx)}`)
+      result = await provider.call(tx)
     }
 
     core.setOutput('result', JSON.stringify(result))
