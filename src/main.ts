@@ -24,7 +24,7 @@ async function run(): Promise<void> {
     core.debug(`data: ${data}`)
     core.debug(`gasLimit: ${gasLimit}`)
 
-    const provider = new JsonRpcProvider(providerUrl)
+    const provider = new JsonRpcProvider(providerUrl, undefined, { polling: true })
     let wallet: Wallet | undefined = undefined
 
     if (walletKey) {

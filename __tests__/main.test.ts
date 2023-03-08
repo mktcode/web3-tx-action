@@ -26,7 +26,6 @@ test('returns expected result', () => {
   // try {
   const output = cp.execFileSync(np, [ip], options).toString()
   const resultStr = output.match(/::set-output name=result::(.*)/)?.[1] || ''
-  console.log(resultStr)
   const result = JSON.parse(resultStr)
   expect(result).toBe(
     '0x0000000000000000000000000000000000000000000000000000000000000002'
