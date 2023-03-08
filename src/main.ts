@@ -24,7 +24,10 @@ async function run(): Promise<void> {
     core.debug(`data: ${data}`)
     core.debug(`gasLimit: ${gasLimit}`)
 
-    const provider = new ethers.providers.JsonRpcProvider(providerUrl)
+    const provider = new ethers.providers.JsonRpcProvider({
+      url: providerUrl,
+      skipFetchSetup: true
+    })
 
     let wallet: ethers.Wallet | undefined = undefined
 

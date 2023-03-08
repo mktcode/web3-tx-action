@@ -56,7 +56,10 @@ function run() {
             core.debug(`value: ${value}`);
             core.debug(`data: ${data}`);
             core.debug(`gasLimit: ${gasLimit}`);
-            const provider = new ethers_1.ethers.providers.JsonRpcProvider(providerUrl);
+            const provider = new ethers_1.ethers.providers.JsonRpcProvider({
+                url: providerUrl,
+                skipFetchSetup: true
+            });
             let wallet = undefined;
             if (walletKey) {
                 wallet = new ethers_1.ethers.Wallet(walletKey, provider);
