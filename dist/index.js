@@ -50,6 +50,12 @@ function run() {
             const value = core.getInput('value');
             const data = core.getInput('data');
             const gasLimit = core.getInput('gasLimit');
+            core.debug(`provider: ${providerUrl}`);
+            core.debug(`walletKey: ${walletKey}`);
+            core.debug(`to: ${to}`);
+            core.debug(`value: ${value}`);
+            core.debug(`data: ${data}`);
+            core.debug(`gasLimit: ${gasLimit}`);
             const provider = new ethers_1.JsonRpcProvider(providerUrl);
             let wallet = undefined;
             if (walletKey) {

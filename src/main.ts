@@ -17,6 +17,13 @@ async function run(): Promise<void> {
     const data: string = core.getInput('data')
     const gasLimit: string = core.getInput('gasLimit')
 
+    core.debug(`provider: ${providerUrl}`)
+    core.debug(`walletKey: ${walletKey}`)
+    core.debug(`to: ${to}`)
+    core.debug(`value: ${value}`)
+    core.debug(`data: ${data}`)
+    core.debug(`gasLimit: ${gasLimit}`)
+
     const provider = new JsonRpcProvider(providerUrl)
     let wallet: Wallet | undefined = undefined
 
