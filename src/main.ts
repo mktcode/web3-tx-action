@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {isAddress, JsonRpcProvider, Wallet} from 'ethers'
+import {ethers} from 'ethers'
 
 type Tx = {
   to: string
@@ -24,16 +24,15 @@ async function run(): Promise<void> {
     core.debug(`data: ${data}`)
     core.debug(`gasLimit: ${gasLimit}`)
 
-    const provider = new JsonRpcProvider(providerUrl, 'sepolia', {
-      polling: true
-    })
-    let wallet: Wallet | undefined = undefined
+    const provider = new ethers.providers.JsonRpcProvider(providerUrl)
+
+    let wallet: ethers.Wallet | undefined = undefined
 
     if (walletKey) {
-      wallet = new Wallet(walletKey, provider)
+      wallet = new ethers.Wallet(walletKey, provider)
     }
 
-    if (!isAddress(to)) throw new Error('Invalid to address')
+    if (!ethers.utils.isAddress(to)) throw new Error('Invalid to address')
 
     const tx: Tx = {
       to,

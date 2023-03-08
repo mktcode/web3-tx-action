@@ -2,7 +2,7 @@ import * as process from 'process'
 import * as cp from 'child_process'
 import * as path from 'path'
 import {expect, test} from '@jest/globals'
-import {Interface} from 'ethers'
+import {Interface} from 'ethers/lib/utils'
 
 const TEST_ABI = ['function balanceOf(address owner) view returns (uint256)']
 
