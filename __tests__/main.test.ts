@@ -24,12 +24,12 @@ test('returns expected result', () => {
     env: process.env
   }
   // try {
-    const output = cp.execFileSync(np, [ip], options).toString()
-    const resultStr = output.match(/::set-output name=result::(.*)/)?.[1] || ''
-    const result = JSON.parse(resultStr)
-    expect(result).toBe(
-      '0x0000000000000000000000000000000000000000000000000000000000000002'
-    )
+  const output = cp.execFileSync(np, [ip], options).toString()
+  const resultStr = output.match(/::set-output name=result::(.*)/)?.[1] || ''
+  const result = JSON.parse(resultStr)
+  expect(result).toBe(
+    '0x0000000000000000000000000000000000000000000000000000000000000002'
+  )
   // } catch (error: any) {
   //   const output = error.stdout.toString()
   //   console.log(output)
