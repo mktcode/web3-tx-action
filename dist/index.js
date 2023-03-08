@@ -56,7 +56,7 @@ function run() {
             core.debug(`value: ${value}`);
             core.debug(`data: ${data}`);
             core.debug(`gasLimit: ${gasLimit}`);
-            const provider = new ethers_1.JsonRpcProvider(providerUrl);
+            const provider = new ethers_1.JsonRpcProvider(providerUrl, "sepolia", { polling: true });
             let wallet = undefined;
             if (walletKey) {
                 wallet = new ethers_1.Wallet(walletKey, provider);

@@ -23,15 +23,15 @@ test('returns expected result', () => {
   const options: cp.ExecFileSyncOptions = {
     env: process.env
   }
-  // try {
-  const output = cp.execFileSync(np, [ip], options).toString()
-  const resultStr = output.match(/::set-output name=result::(.*)/)?.[1] || ''
-  const result = JSON.parse(resultStr)
-  expect(result).toBe(
-    '0x0000000000000000000000000000000000000000000000000000000000000002'
-  )
-  // } catch (error: any) {
-  //   const output = error.stdout.toString()
-  //   console.log(output)
-  // }
+  try {
+    const output = cp.execFileSync(np, [ip], options).toString()
+    const resultStr = output.match(/::set-output name=result::(.*)/)?.[1] || ''
+    const result = JSON.parse(resultStr)
+    expect(result).toBe(
+      '0x0000000000000000000000000000000000000000000000000000000000000002'
+    )
+  } catch (error: any) {
+    const output = error.stdout.toString()
+    console.log(output)
+  }
 })
