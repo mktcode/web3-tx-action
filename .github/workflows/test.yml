@@ -22,7 +22,7 @@ jobs:
       - uses: ./
         id: balanceOf
         with:
-          providerUrl: {{ secrets.SEPOLIA_PROVIDER_URL }}
+          providerUrl: ${{ secrets.SEPOLIA_PROVIDER_URL }}
           to: '0xab879B28006F5095ab346Eb525daFeA2cf18Bc3f'
           data: '0x70a0823100000000000000000000000027711f9c07230632f2ee1a21a967a9ac4729e520'
       - if: ${{ steps.balanceOf.outputs.result != '0x0000000000000000000000000000000000000000000000000000000000000002' }}
